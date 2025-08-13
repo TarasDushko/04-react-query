@@ -6,11 +6,11 @@ interface SearchBarProps {
 }
 
 const SearchBar = ({ onSubmit }: SearchBarProps) => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const query = (formData.get("query") as string) || "";
+    const formData = new FormData(e.currentTarget);
+    const query = (formData.get("query") || "").toString().trim();
 
     if (!query) {
       toast.error("Please enter your search query.");

@@ -27,8 +27,8 @@ const App = () => {
     enabled: query.trim() !== "",
     placeholderData: keepPreviousData,
   });
-  const movies: Movie[] = useMemo(() => data?.results ?? [], [data?.results]);
 
+  const movies = useMemo(() => data?.results ?? [], [data]);
   const totalPages = data?.total_pages ?? 0;
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const App = () => {
       )}
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
-      {!isLoading && !isError && movies && movies.length > 0 && (
+      {!isLoading && !isError && movies.length > 0 && (
         <MovieGrid movies={movies} onSelect={setSelectedMovie} />
       )}
       {selectedMovie && (
