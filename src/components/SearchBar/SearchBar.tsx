@@ -6,10 +6,13 @@ interface SearchBarProps {
 }
 
 const SearchBar = ({ onSubmit }: SearchBarProps) => {
-  const handleSubmit = (formData: FormData) => {
-    const query = formData.get("query") as string;
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    if (query === "") {
+    const formData = new FormData(event.currentTarget);
+    const query = (formData.get("query") as string) || "";
+
+    if (!query) {
       toast.error("Please enter your search query.");
       return;
     }
@@ -28,7 +31,7 @@ const SearchBar = ({ onSubmit }: SearchBarProps) => {
         >
           Powered by TMDB
         </a>
-        <form className={styles.form} action={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <input
             className={styles.input}
             type="text"
